@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import projects from '../data/projects';
 
 function BrowserMockup() {
@@ -33,17 +34,8 @@ function BrowserMockup() {
 }
 
 function ProjectCard({ project }) {
+  const [isLoaded, setIsLoaded] = useState(false);
   const hasLiveUrl = Boolean(project.liveUrl) && project.liveUrl !== '#';
-
-  const thumbnail = project.image ? (
-    <img
-      src={project.image}
-      alt={project.title}
-      className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
-    />
-  ) : (
-    <BrowserMockup />
-  );
 
   return (
     <article
@@ -57,11 +49,27 @@ function ProjectCard({ project }) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`View live demo of ${project.title}`}
-          className={`block w-full cursor-pointer overflow-hidden rounded-xl border border-primary/15 bg-light transition-shadow duration-300 group-hover:border-primary/40 group-hover:shadow-lg group-hover:shadow-primary/15 ${
+          className={`relative block w-full cursor-pointer overflow-hidden rounded-xl border border-primary/15 bg-light transition-shadow duration-300 group-hover:border-primary/40 group-hover:shadow-lg group-hover:shadow-primary/15 ${
             project.featured ? 'aspect-[16/9]' : 'aspect-[4/3]'
           }`}
         >
-          {thumbnail}
+          <div
+            aria-hidden="true"
+            className={`absolute inset-0 animate-pulse bg-gray-200 transition-opacity duration-500 ${
+              isLoaded ? 'pointer-events-none opacity-0' : 'opacity-100'
+            }`}
+          />
+          <img
+            src={`https://api.microlink.io/?url=${encodeURIComponent(
+              project.liveUrl
+            )}&screenshot=true&embed=screenshot.url`}
+            alt={`${project.title} live screenshot`}
+            loading="lazy"
+            onLoad={() => setIsLoaded(true)}
+            className={`h-full w-full object-cover transition-all duration-500 ease-out group-hover:scale-105 ${
+              isLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
         </a>
       ) : (
         <div
@@ -69,7 +77,7 @@ function ProjectCard({ project }) {
             project.featured ? 'aspect-[16/9]' : 'aspect-[4/3]'
           }`}
         >
-          {thumbnail}
+          <BrowserMockup />
         </div>
       )}
 

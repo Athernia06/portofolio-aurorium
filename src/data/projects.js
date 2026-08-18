@@ -1,5 +1,3 @@
-import auroriumPayImg from '../assets/aurorium-pay.png';
-
 const projects = [
   {
     id: 'ppob-digital-payment',
@@ -7,7 +5,7 @@ const projects = [
     category: 'Web Application & Micro-Frontend',
     description:
       'An interactive, minimalist digital payment and utility billing interface featuring dynamic price calculations, real-time input validation, and responsive digital receipts.',
-    image: auroriumPayImg,
+    image: null,
     liveUrl: 'https://aurorium-pay.vercel.app/',
     githubUrl: 'https://github.com/Athernia06/aurorium-pay',
     caseStudyUrl: '',
