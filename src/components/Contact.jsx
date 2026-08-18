@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useToast } from './Toast';
 
 const CONTACT_LINKS = {
   email: 'mailto:athernia06@gmail.com',
@@ -21,13 +22,23 @@ const CHANNELS = [
 ];
 
 const INPUT_CLASSES =
-  'w-full rounded-lg border border-accent/15 bg-light px-4 py-3 font-body text-sm text-accent placeholder:text-primary/50 transition-colors duration-300 focus:border-primary focus:outline-none';
+  'w-full rounded-lg border border-gray-300 bg-surface px-4 py-3 font-body text-sm text-gray-700 placeholder:text-gray-400 transition-colors duration-300 focus:border-primary focus:outline-none dark:border-slate-600 dark:text-slate-300 dark:placeholder:text-slate-500 dark:focus:border-accent';
 
 export default function Contact() {
+  const showToast = useToast();
   const [channel, setChannel] = useState('whatsapp');
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
+
+  const handleLinkClick = (link) => {
+    if (link.id === 'email') {
+      navigator.clipboard?.writeText(EMAIL_ADDRESS);
+      showToast('Email copied to clipboard!');
+      return;
+    }
+    showToast(`Opening ${link.label} in a new tab...`);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,7 +59,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="border-t border-accent/5 bg-light py-24">
+    <section id="contact" className="border-t border-line bg-surface py-24">
       <div className="mx-auto w-full max-w-6xl px-6">
         <div className="mx-auto max-w-2xl text-center">
           <p className="font-body text-xs font-semibold uppercase tracking-[0.25em] text-primary">
@@ -68,10 +79,11 @@ export default function Contact() {
               <a
                 key={link.id}
                 href={link.href}
+                onClick={() => handleLinkClick(link)}
                 {...(link.external
                   ? { target: '_blank', rel: 'noopener noreferrer' }
                   : {})}
-                className="cursor-pointer rounded-lg border border-gray-200 bg-white px-8 py-3.5 font-heading text-sm font-semibold text-accent transition-all duration-300 hover:bg-accent hover:text-light"
+                className="cursor-pointer rounded-lg border border-slate-400 bg-card px-8 py-3.5 font-heading text-sm font-semibold text-slate-700 transition-all duration-300 hover:border-primary hover:text-primary dark:border-slate-600 dark:text-slate-300 dark:hover:border-accent dark:hover:text-white"
               >
                 {link.label}
               </a>
@@ -81,13 +93,19 @@ export default function Contact() {
 
         <form
           onSubmit={handleSubmit}
-          className="mx-auto mt-16 max-w-2xl rounded-2xl border border-accent/10 bg-white p-6 md:p-8"
+          className="mx-auto mt-16 max-w-2xl rounded-2xl border border-accent/10 bg-card p-6 md:p-8"
         >
           <div
-            className="flex rounded-lg border border-accent/15 p-1"
+            className="relative flex rounded-lg border border-line bg-surface p-1"
             role="tablist"
             aria-label="Select message delivery channel"
           >
+            <span
+              aria-hidden="true"
+              className={`absolute inset-y-1 left-1 w-[calc(50%-0.25rem)] rounded-md bg-primary transition-transform duration-300 ease-in-out dark:bg-blue-600 ${
+                channel === 'email' ? 'translate-x-full' : 'translate-x-0'
+              }`}
+            />
             {CHANNELS.map((option) => (
               <button
                 key={option.id}
@@ -95,10 +113,10 @@ export default function Contact() {
                 role="tab"
                 aria-selected={channel === option.id}
                 onClick={() => setChannel(option.id)}
-                className={`flex-1 cursor-pointer rounded-md px-4 py-2.5 font-heading text-sm font-semibold transition-colors duration-300 ${
+                className={`relative z-10 flex-1 cursor-pointer rounded-md px-4 py-2.5 font-heading text-sm font-semibold transition-all duration-300 ease-in-out active:scale-95 ${
                   channel === option.id
-                    ? 'bg-accent text-light'
-                    : 'text-accent hover:text-primary'
+                    ? 'text-white'
+                    : 'text-slate-700 hover:text-primary dark:text-slate-300 dark:hover:text-white'
                 }`}
               >
                 {option.label}
@@ -162,7 +180,7 @@ export default function Contact() {
 
           <button
             type="submit"
-            className="mt-6 w-full cursor-pointer rounded-lg bg-accent px-8 py-3.5 font-heading text-sm font-semibold text-light transition-colors duration-300 hover:bg-primary"
+            className="mt-6 w-full cursor-pointer rounded-lg border border-transparent bg-primary px-8 py-3.5 font-heading text-sm font-semibold text-white transition-colors duration-300 hover:bg-primary/90 dark:bg-blue-600 dark:hover:bg-blue-600/90"
           >
             Send Message
           </button>

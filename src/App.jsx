@@ -1,3 +1,6 @@
+import { ThemeProvider } from './context/ThemeContext';
+import { ToastProvider } from './components/Toast';
+import ScrollProgress from './components/ScrollProgress';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ProjectGrid from './components/ProjectGrid';
@@ -6,14 +9,19 @@ import Contact from './components/Contact';
 
 export default function App() {
   return (
-    <div className="bg-light font-body">
-      <Navbar />
-      <main>
-        <Hero />
-        <ProjectGrid />
-        <Skills />
-        <Contact />
-      </main>
-    </div>
+    <ThemeProvider>
+      <ToastProvider>
+        <div className="bg-surface font-body text-ink">
+          <ScrollProgress />
+          <Navbar />
+          <main>
+            <Hero />
+            <ProjectGrid />
+            <Skills />
+            <Contact />
+          </main>
+        </div>
+      </ToastProvider>
+    </ThemeProvider>
   );
 }

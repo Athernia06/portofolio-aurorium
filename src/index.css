@@ -6,4 +6,41 @@
   --color-primary: 70 130 180;
   --color-accent: 25 25 112;
   --color-light: 248 249 250;
+
+  --bg-primary: #ffffff;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+
+  --color-bg: 255 255 255;
+  --color-card-bg: 255 255 255;
+  --color-text: 15 23 42;
+  --color-muted: 100 116 139;
+  --color-border: 226 232 240;
+}
+
+.dark {
+  --color-primary: 127 168 201;
+  --color-accent: 148 180 219;
+
+  --bg-primary: #0b0f19;
+  --bg-card: #182232;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: #243248;
+
+  --color-bg: 11 15 25;
+  --color-card-bg: 24 34 50;
+  --color-text: 248 250 252;
+  --color-muted: 148 163 184;
+  --color-border: 36 50 72;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  transition:
+    background-color 300ms ease-in-out,
+    color 300ms ease-in-out;
 }

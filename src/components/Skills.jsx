@@ -18,7 +18,7 @@ const SKILL_GROUPS = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="bg-light py-16">
+    <section id="skills" className="bg-surface py-16">
       <div className="mx-auto w-full max-w-6xl px-6">
         <p className="font-body text-xs font-semibold uppercase tracking-[0.25em] text-primary">
           Capabilities
@@ -31,7 +31,7 @@ export default function Skills() {
           {SKILL_GROUPS.map((group) => (
             <div
               key={group.id}
-              className="rounded-2xl border border-accent/10 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg hover:shadow-accent/5"
+              className="rounded-2xl border border-line bg-card p-6 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg hover:shadow-accent/5"
             >
               <h3 className="font-heading text-lg font-bold text-accent">
                 {group.title}
@@ -40,7 +40,7 @@ export default function Skills() {
                 {group.skills.map((skill) => (
                   <li
                     key={skill}
-                    className="rounded-full border border-primary/25 px-4 py-1.5 font-body text-sm font-medium text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/5"
+                    className="rounded-full border border-slate-400 px-4 py-1.5 font-body text-sm font-medium text-slate-700 transition-colors duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary"
                   >
                     {skill}
                   </li>
